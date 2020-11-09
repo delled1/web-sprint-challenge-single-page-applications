@@ -10,10 +10,10 @@ export default function Form(props) {
     const initialFormState = {
         name:"",
         size:"",
-        cheese:"",
-        pepperoni:"",
-        mushrooms:"",
-        sausage:"",
+        cheese:false,
+        pepperoni:false,
+        mushrooms:false,
+        sausage:false,
         specialInstructions:""
     }
 
@@ -37,12 +37,13 @@ export default function Form(props) {
 
     //schema used for all validation to determine whether the input is valid or not   
    const formSchema = yup.object().shape({
-    name: yup.string().required("Name is required"),
-    size: yup.string().required("Please select a size"),
-    cheese: yup.boolean().oneOf([true], "Please check if you would like"),
-    pepperoni: yup.boolean().oneOf([true], "Please check if you would like"),
-    mushrooms: yup.boolean().oneOf([true], "Please check if you would like"),
-    sausage: yup.boolean().oneOf([true], "Please check if you would like")
+    name: yup.string().required("Name is required").min(2, "Please input at least 2 characters"),
+    size: yup.boolean().oneOf([true], "Please select a size"),
+    cheese: yup.boolean(),
+    pepperoni: yup.boolean(),
+    mushrooms: yup.boolean(),
+    sausage: yup.boolean(),
+    specialInstructions: yup.string().required('Please write any special instructions, or "N/A" if nothing is needed.')
 })
 
   // inline validation, validating one key/value pair
@@ -88,10 +89,10 @@ const formSubmit = e => {
         setFormState({
             name:"",
             size:"",
-            cheese:"",
-            pepperoni:"",
-            mushrooms:"",
-            sausage:"",
+            cheese:false,
+            pepperoni:false,
+            mushrooms:false,
+            sausage:false,
             specialInstructions:""
           });
 
@@ -151,7 +152,7 @@ const formSubmit = e => {
             <br/>
             <label htmlFor="size">
                 Size
-                <select>
+                <select id="size" name="size" onChange={inputChange} value={formState.size}>
                     <option value="0"> Select Size</option>
                     <option value="1">Small</option>
                     <option value="2">Medium</option>
@@ -161,6 +162,7 @@ const formSubmit = e => {
           <p className="error">{errors.size}</p>
         ) : null}
             </label>
+            <br/>
             <label htmlFor="cheese" className="toppings">
                 <input 
                 type="checkbox"
@@ -196,6 +198,18 @@ const formSubmit = e => {
                 onChange={inputChange}
                 />
                 Sausage
+            </label>
+            <br />
+            <label htmlFor="specialInstructions">
+                Special Instructions
+                <input
+                    id="specialInstructions"
+                    type="text"
+                    name="specialInstructions"
+                    onChange={inputChange}
+                    value={formState.specialInstructions}
+                />
+                {errors.specialInstructions.length > 0 ? <p className="error">{errors.specialInstructions}</p> : null}
             </label>
             <pre>{JSON.stringify(post, null, 2)}</pre>
             <button  id="submit" disabled={isButtonDisabled} type="submit">
