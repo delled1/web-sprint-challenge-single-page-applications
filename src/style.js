@@ -2,7 +2,7 @@
 import React from "react"
 import Styled from "styled-components"
 
-const StyledHome = Styled.div`
+const StyledComponents = Styled.div`
     .headerContainer {
         background-color: yellow;
         color: red;
@@ -27,6 +27,22 @@ const StyledHome = Styled.div`
             
         }
     }
+
+    .bodyContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    
+    .bodyTitle{
+        text-align: center;
+        font-size: 1rem;
+        font-weight: bold;
+        color: red;
+        width: 100%;
+    }
 `
 
-export default StyledHome;
+export default StyledComponents;
